@@ -1,0 +1,10 @@
+*
+
+# Module files
+!go.mod
+!go.sum
+
+# Go files
+!cmd/
+!env/
+!hello/
