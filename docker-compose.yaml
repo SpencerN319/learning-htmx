@@ -8,3 +8,12 @@ services:
       dockerfile: Dockerfile
       args:
         TARGET: app
+    develop:
+      watch:
+      - action: rebuild
+        files:
+        - ./**/*.go
+        - ./go.mod
+        - ./go.sum
+    ports:
+    - "8080:8080"

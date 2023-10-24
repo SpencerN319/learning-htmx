@@ -1,11 +1,12 @@
 package main
 
 import (
+	"context"
 	"log/slog"
 	"os"
 
-	"github.com/SpencerN319/go-template/env"
-	"github.com/SpencerN319/go-template/hello"
+	"github.com/SpencerN319/learning-htmx/env"
+	"github.com/SpencerN319/learning-htmx/server"
 )
 
 func init() {
@@ -21,5 +22,7 @@ func init() {
 }
 
 func main() {
-	slog.Info(hello.Hello())
+	svr :=  server.New(context.Background())
+	defer svr.Close()
+	svr.ListenAndServe()
 }

@@ -31,10 +31,16 @@ help:
 build:
 	@docker-compose build
 
+.PHONY: compile
+## Compile binary
+compile:
+	@go build -o target/app ./cmd/app
+
 .PHONY: up
 ## Run local environment
 up:
 	@docker-compose up --wait --build
+	# @docker-compose watch --no-up TOO NOISY
 
 .PHONY: logs
 ## Follow logs
@@ -65,6 +71,6 @@ integration_test:
 ## Run unit tests & store coverage log, Server and Client coverage generated separately
 unit_test:
 	@echo '${GREEN}Unit Tests${RESET}'
-	@go test -race --tags=unit ./... -coverprofile unit_coverage.out
+	@go test -race --tags=unit -timeout 30s -coverprofile unit_coverage.out ./...
 	@go tool cover -html=unit_coverage.out
 	@rm unit_coverage.out

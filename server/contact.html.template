@@ -1,0 +1,70 @@
+{{- define "list-contacts"}}
+  <ul id="list-contacts">
+  {{- range $contact := .}}
+    <li>
+      <a href="/contact/{{.Id}}" hx-boost="true">{{.FirstName}} {{.LastName}}</a>
+    </li>
+  {{end -}}
+  </ul>
+{{end -}}
+
+{{- define "view-contact" -}}
+  <table id="view-contact">
+    <tr><td>First Name</td><td>{{.FirstName}}</td></tr>
+    <tr><td>Last Name</td><td>{{.LastName}}</td></tr>
+    <tr><td>Email</td><td>{{.Email}}</td></tr>
+  </table>
+  <a href="/contact/{{.Id}}/edit" hx-boost="true" role="button">
+    Click To Edit
+  </a>
+{{end}}
+
+{{- define "edit-contact"}}
+  <form id="edit-contact" action="/contact/{{.Id}}" method="POST" hx-boost="true">
+    <div>
+      <label for="first-name">First Name</label>
+      <input id="first-name" type="text" name="first-name" value="{{.FirstName}}">
+    </div>
+    <div class="form-group">
+      <label for="last-name">Last Name</label>
+      <input id="last-name" type="text" name="last-name" value="{{.LastName}}">
+    </div>
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input id="email" type="email" name="email" value="{{.Email}}">
+    </div>
+    <button>Submit</button>
+    <a href="/contact/{{.Id}}" hx-boost="true" role="button">Cancel</a>
+  </form>
+{{end -}}
+
+{{- define "page"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Click to Edit</title>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Click to edit example" />
+
+  <script src="https://unpkg.com/htmx.org@1.9.6"
+          integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni"
+          crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.5.10/css/pico.min.css"
+        integrity="sha384-JnI9fsy7u0hXe2CXur8V8MkHfeqi2q7x6KYi4DbEYIjZJuP2Z2eMlp2RbdO7p3zL"
+        crossorigin="anonymous">
+</head>
+<body>
+
+<header class="container">
+  <nav>
+    <a href="/" hx-boost="true" hx-target="#view">Contacts</a>
+  </nav>
+</header>
+
+<div id="view" hx-swap="innerHTML" hx-target="#view" class="container">
+</div>
+</body>
+</html>
+{{end -}}
